@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Giulio Mattedi — Curriculum Vitae</title>
+  <meta name="description" content="Curriculum Vitae of Giulio Mattedi — machine learning and computational science researcher.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <style>
+    :root {
+      --bg-canvas: hsl(40, 18%, 95%);
+      --bg-sheet: hsl(40, 30%, 99%);
+      --bg-subtle: hsl(40, 16%, 94%);
+      --ink: hsl(215, 25%, 13%);
+      --ink-secondary: hsl(215, 14%, 34%);
+      --ink-muted: hsl(215, 10%, 48%);
+      --accent: hsl(196, 72%, 30%);
+      --accent-hover: hsl(196, 80%, 22%);
+      --rule: hsl(38, 14%, 87%);
+      --sheet-border: hsl(38, 16%, 88%);
+      --sheet-shadow:
+        0 1px 2px hsla(215, 25%, 12%, 0.04),
+        0 16px 40px -12px hsla(215, 25%, 12%, 0.08);
+      --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-canvas: hsl(220, 20%, 7%);
+        --bg-sheet: hsl(220, 17%, 10.5%);
+        --bg-subtle: hsl(220, 15%, 15%);
+        --ink: hsl(210, 20%, 93%);
+        --ink-secondary: hsl(214, 13%, 72%);
+        --ink-muted: hsl(215, 11%, 56%);
+        --accent: hsl(193, 68%, 67%);
+        --accent-hover: hsl(193, 82%, 78%);
+        --rule: hsl(220, 14%, 19%);
+        --sheet-border: hsl(220, 14%, 18%);
+        --sheet-shadow:
+          0 1px 2px hsla(0, 0%, 0%, 0.35),
+          0 20px 48px -12px hsla(0, 0%, 0%, 0.55);
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 2.75rem 1.25rem 4rem;
+      background-color: var(--bg-canvas);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.58;
+      font-feature-settings: "kern" 1, "liga" 1;
+    }
+
+    .sheet {
+      max-width: 51rem;
+      margin: 0 auto;
+      padding: 3.25rem 3.5rem;
+      background-color: var(--bg-sheet);
+      border: 1px solid var(--sheet-border);
+      border-radius: 6px;
+      box-shadow: var(--sheet-shadow);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 0.18em;
+      transition: color 140ms ease, text-underline-offset 140ms ease;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+      text-underline-offset: 0.26em;
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    header {
+      padding-bottom: 1.6rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem 1.5rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 650;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+    }
+
+    .tagline {
+      margin: 0.35rem 0 0;
+      font-size: 1.02rem;
+      color: var(--ink-secondary);
+      font-weight: 450;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 1.1rem;
+      margin-top: 0.95rem;
+      padding: 0;
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--ink-muted);
+    }
+
+    .contact-links li {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .contact-links a {
+      font-family: var(--mono);
+      font-size: 0.83rem;
+      text-decoration: none;
+    }
+
+    .contact-links a:hover {
+      text-decoration: underline;
+    }
+
+    .summary {
+      margin: 1.15rem 0 0;
+      font-size: 0.96rem;
+      color: var(--ink-secondary);
+      max-width: 64ch;
+    }
+
+    section {
+      margin-top: 2rem;
+    }
+
+    h2 {
+      margin: 0 0 1rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--rule);
+      font-size: 0.78rem;
+      font-weight: 650;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+    }
+
+    .entries {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 8.5rem minmax(0, 1fr);
+      gap: 0.25rem 1.5rem;
+      align-items: baseline;
+    }
+
+    .entry-meta {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink-muted);
+      line-height: 1.5;
+    }
+
+    .entry-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.15rem 0.75rem;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.38;
+    }
+
+    .org {
+      font-weight: 500;
+      color: var(--ink-secondary);
+    }
+
+    .location {
+      font-size: 0.84rem;
+      color: var(--ink-muted);
+    }
+
+    .entry-body ul {
+      margin: 0.4rem 0 0;
+      padding-left: 1.1rem;
+      color: var(--ink-secondary);
+      font-size: 0.92rem;
+    }
+
+    .entry-body li + li {
+      margin-top: 0.25rem;
+    }
+
+    .entry-note {
+      margin: 0.25rem 0 0;
+      font-size: 0.9rem;
+      color: var(--ink-secondary);
+    }
+
+    .pub-title {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .pub-authors {
+      margin: 0.18rem 0 0;
+      font-size: 0.89rem;
+      color: var(--ink-secondary);
+    }
+
+    .pub-authors strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .pub-venue {
+      margin: 0.18rem 0 0;
+      font-size: 0.86rem;
+      color: var(--ink-muted);
+    }
+
+    .inline-links {
+      display: inline-flex;
+      gap: 0.45rem;
+      margin-left: 0.4rem;
+      font-family: var(--mono);
+      font-size: 0.78rem;
+    }
+
+    .inline-links a {
+      padding: 0.05rem 0.38rem;
+      background-color: var(--bg-subtle);
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .inline-links a:hover {
+      text-decoration: underline;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 8.5rem minmax(0, 1fr);
+      gap: 0.55rem 1.5rem;
+      font-size: 0.91rem;
+    }
+
+    .skill-label {
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .skill-items {
+      color: var(--ink-secondary);
+    }
+
+    .compact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--rule);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 0;
+        background-color: var(--bg-sheet);
+      }
+
+      .sheet {
+        padding: 1.75rem 1.25rem 2.5rem;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .entry,
+      .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 0.15rem;
+      }
+
+      .skills-grid .skill-items {
+        margin-bottom: 0.45rem;
+      }
+    }
+
+    @media print {
+      :root {
+        --bg-canvas: #ffffff;
+        --bg-sheet: #ffffff;
+        --bg-subtle: transparent;
+        --ink: #111111;
+        --ink-secondary: #2b2b2b;
+        --ink-muted: #555555;
+        --accent: #111111;
+        --rule: #d4d4d4;
+      }
+
+      @page {
+        margin: 15mm 17mm;
+      }
+
+      body {
+        padding: 0;
+        font-size: 9.5pt;
+        line-height: 1.42;
+      }
+
+      .sheet {
+        max-width: none;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+      }
+
+      section {
+        margin-top: 1.2rem;
+      }
+
+      .entries {
+        gap: 0.8rem;
+      }
+
+      .entry {
+        grid-template-columns: 7rem minmax(0, 1fr);
+        gap: 0.15rem 1rem;
+        break-inside: avoid;
+      }
+
+      h2 {
+        break-after: avoid;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .inline-links a {
+        padding: 0;
+      }
+
+      footer {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="sheet">
+    <header>
+      <div class="header-top">
+        <div>
+          <h1>Giulio Mattedi</h1>
+          <p class="tagline">[Role Title, e.g. Senior Research Scientist · Machine Learning &amp; Computational Biology]</p>
+        </div>
+      </div>
+
+      <ul class="contact-links" aria-label="Contact and profiles">
+        <li>[City, Country]</li>
+        <li><a id="link-github" href="https://github.com/gmattedi" rel="noopener noreferrer">github.com/gmattedi</a></li>
+        <li><a id="link-scholar" href="https://scholar.google.com/" rel="noopener noreferrer">Google Scholar</a></li>
+        <li><a id="link-linkedin" href="https://www.linkedin.com/" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a id="link-orcid" href="https://orcid.org/" rel="noopener noreferrer">ORCID</a></li>
+        <li><a id="link-pdf" href="cv.pdf">PDF</a></li>
+      </ul>
+
+      <p class="summary">
+        [Short 2-sentence summary — e.g. Machine learning researcher working on biomolecular foundation models, protein-ligand interactions, and structure-based drug discovery. Background in computational chemistry, deep learning in JAX/PyTorch, and large-scale scientific data pipelines.]
+      </p>
+    </header>
+
+    <section aria-labelledby="heading-experience">
+      <h2 id="heading-experience">Experience</h2>
+      <div class="entries">
+        <article class="entry">
+          <div class="entry-meta">[20XX – Present]</div>
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>[Role Title] · <span class="org">[Organization]</span></h3>
+              <span class="location">[City, Country]</span>
+            </div>
+            <ul>
+              <li>[Core research or technical contribution and concrete outcome.]</li>
+              <li>[Model architecture, dataset, or production capability built and adopted across teams.]</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-meta">[20XX – 20XX]</div>
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>[Previous Role Title] · <span class="org">[Organization]</span></h3>
+              <span class="location">[City, Country]</span>
+            </div>
+            <ul>
+              <li>[Method or system developed and how it improved benchmark or discovery workflows.]</li>
+              <li>[Cross-functional collaboration with medicinal chemistry, structural biology, or ML engineering.]</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="heading-publications">
+      <h2 id="heading-publications">Selected Publications &amp; Preprints</h2>
+      <div class="entries">
+        <article class="entry">
+          <div class="entry-meta">[20XX]</div>
+          <div class="entry-body">
+            <div class="pub-title">[Paper or Preprint Title]</div>
+            <p class="pub-authors">[Co-author A], <strong>G. Mattedi</strong>, [Co-author B], [Senior Author]</p>
+            <p class="pub-venue">
+              <em>[Journal or Conference Name]</em>
+              <span class="inline-links">
+                <a id="pub-1-paper" href="https://doi.org/" rel="noopener noreferrer">DOI</a>
+                <a id="pub-1-code" href="https://github.com/gmattedi" rel="noopener noreferrer">Code</a>
+              </span>
+            </p>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-meta">[20XX]</div>
+          <div class="entry-body">
+            <div class="pub-title">[Second Paper Title]</div>
+            <p class="pub-authors"><strong>G. Mattedi</strong>, [Co-author A], [Senior Author]</p>
+            <p class="pub-venue">
+              <em>[Journal or Conference Name]</em>
+              <span class="inline-links">
+                <a id="pub-2-paper" href="https://doi.org/" rel="noopener noreferrer">DOI</a>
+              </span>
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="heading-education">
+      <h2 id="heading-education">Education</h2>
+      <div class="entries">
+        <article class="entry">
+          <div class="entry-meta">[20XX – 20XX]</div>
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>[Ph.D. in Computational Chemistry / Machine Learning] · <span class="org">[University]</span></h3>
+              <span class="location">[City, Country]</span>
+            </div>
+            <p class="entry-note">Thesis: <em>[Thesis Title]</em> · Advisor: [Advisor Name]</p>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry-meta">[20XX – 20XX]</div>
+          <div class="entry-body">
+            <div class="entry-head">
+              <h3>[M.Sc. / B.Sc. in Chemistry or Computer Science] · <span class="org">[University]</span></h3>
+              <span class="location">[City, Country]</span>
+            </div>
+            <p class="entry-note">[Honors / Distinction]</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section aria-labelledby="heading-skills">
+      <h2 id="heading-skills">Technical Focus &amp; Open Source</h2>
+      <div class="skills-grid">
+        <div class="skill-label">Machine Learning</div>
+        <div class="skill-items">JAX, Flax, PyTorch, geometric &amp; sequence models, multi-GPU training</div>
+
+        <div class="skill-label">Scientific Stack</div>
+        <div class="skill-items">RDKit, structural bioinformatics, molecular dynamics, cheminformatics</div>
+
+        <div class="skill-label">Data &amp; Systems</div>
+        <div class="skill-items">Python, Rust, SQL / BigQuery, Apache Beam, Polars</div>
+
+        <div class="skill-label">Selected Code</div>
+        <div class="skill-items">
+          <a id="repo-pydrc" href="https://github.com/gmattedi/pydrc" rel="noopener noreferrer">pydrc</a>,
+          <a id="repo-rust-mmr" href="https://github.com/gmattedi/rust-mmr" rel="noopener noreferrer">rust-mmr</a>,
+          <a id="repo-miniqm" href="https://github.com/gmattedi/miniqm" rel="noopener noreferrer">miniqm</a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="heading-honors">
+      <h2 id="heading-honors">Talks, Patents &amp; Honors</h2>
+      <div class="compact-list">
+        <div class="entry">
+          <div class="entry-meta">[20XX]</div>
+          <div class="entry-body">[Invited talk, patent filing, fellowship, or award]</div>
+        </div>
+        <div class="entry">
+          <div class="entry-meta">[20XX]</div>
+          <div class="entry-body">[Scholarship, prize, or conference presentation]</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Giulio Mattedi</span>
+      <span>Updated [Month 2026] · Print or save as PDF with Ctrl/Cmd + P</span>
+    </footer>
+  </main>
+</body>
+</html>
