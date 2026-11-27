@@ -78,8 +78,18 @@ body {
 .page-actions {
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0;
+  pointer-events: none;
+}
+
+.page-actions a,
+.page-actions button {
+  pointer-events: auto;
 }
 
 .motif-wrap {
@@ -110,7 +120,9 @@ body {
   height: auto;
 }
 
+.page-action,
 .pdf-button {
+  display: inline-block;
   padding: 0.24rem 0.65rem;
   border: 1px solid var(--rule);
   border-radius: 3px;
@@ -119,15 +131,18 @@ body {
   font-family: var(--serif);
   font-size: 0.88rem;
   line-height: 1.4;
+  text-decoration: none;
   cursor: pointer;
   transition: color 120ms ease, border-color 120ms ease;
 }
 
+.page-action:hover,
 .pdf-button:hover {
   color: var(--ink);
   border-color: var(--ink);
 }
 
+.page-action:focus-visible,
 .pdf-button:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
@@ -367,10 +382,12 @@ footer {
   .page-actions {
     position: static;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     margin-bottom: 0.75rem;
+    pointer-events: auto;
   }
 
+  .page-action,
   .pdf-button {
     padding: 0.36rem 0.78rem;
   }

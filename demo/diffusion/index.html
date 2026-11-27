@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reverse-SDE Protein Conformer Sampling — Giulio Mattedi</title>
+  <meta name="description" content="Interactive reverse-SDE protein conformer sampling demo on Adenylate Kinase (4AKE open vs. 1AKE closed).">
+  <link rel="canonical" href="https://gmattedi.github.io/demo/diffusion/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Reverse-SDE Protein Conformer Sampling — Giulio Mattedi">
+  <meta property="og:description" content="Interactive reverse-SDE proxy for a protein folding diffusion model on Adenylate Kinase.">
+  <meta property="og:url" content="https://gmattedi.github.io/demo/diffusion/">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'; connect-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none';">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="diffusion.css">
+  <script src="diffusion.js" defer></script>
+</head>
+<body class="demo-body">
+  <main class="page demo-page">
+    <nav class="demo-nav" aria-label="Back to CV">
+      <a id="link-back-cv" href="../../" class="page-action">&larr; CV</a>
+    </nav>
+
+    <header class="demo-header">
+      <h1>Reverse-SDE Protein Conformer Sampling</h1>
+      <p class="subtitle">Adenylate Kinase &middot; Open (4AKE) vs. Closed (1AKE)</p>
+    </header>
+
+    <section class="workspace" aria-label="Interactive diffusion simulator">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">3D Conformer</span>
+          <span class="panel-status" id="status-3d">step 0 / 40 &middot; &sigma; = 240 &Aring;</span>
+        </div>
+        <div class="canvas-stage">
+          <canvas id="view3d" width="760" height="580" aria-label="3D Adenylate Kinase C-alpha point cloud denoising into open or closed conformer"></canvas>
+        </div>
+        <div class="canvas-foot">
+          <span class="legend">
+            <span class="legend-item"><span class="swatch swatch-solid"></span>LID &amp; NMP wings</span>
+            <span class="legend-item"><span class="swatch swatch-muted"></span>Core</span>
+          </span>
+          <span>Drag to rotate</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">RMSD to Crystal Basins (&Aring;)</span>
+          <span class="panel-status" id="status-rmsd">Open 3.57 &middot; Closed 3.57</span>
+        </div>
+        <div class="canvas-stage">
+          <canvas id="plot-rmsd" class="plot-canvas" width="640" height="488" aria-label="RMSD to 4AKE Open and 1AKE Closed crystal basins"></canvas>
+        </div>
+        <div class="canvas-foot">
+          <span class="legend">
+            <span class="legend-item"><span class="swatch swatch-solid"></span>Open (4AKE)</span>
+            <span class="legend-item"><span class="swatch swatch-dashed"></span>Closed (1AKE)</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Sampler parameters">
+      <div class="control">
+        <label class="control-label" for="ctrl-churn">
+          <span>Churn</span>
+          <span class="control-val" id="val-churn">2</span>
+        </label>
+        <input id="ctrl-churn" type="range" min="0" max="16" step="0.5" value="2">
+        <span class="control-hint">0 = ODE &middot; &gt;0 = SDE</span>
+      </div>
+
+      <div class="control">
+        <label class="control-label" for="ctrl-steps">
+          <span>Steps</span>
+          <span class="control-val" id="val-steps">40</span>
+        </label>
+        <input id="ctrl-steps" type="range" min="8" max="80" step="2" value="40">
+        <span class="control-hint">8 &ndash; 80</span>
+      </div>
+
+      <div class="control">
+        <label class="control-label" for="ctrl-bias">
+          <span>Bias</span>
+          <span class="control-val" id="val-bias">0.0</span>
+        </label>
+        <input id="ctrl-bias" type="range" min="-3.0" max="3.0" step="0.2" value="0.0">
+        <span class="control-hint">&minus; Closed &middot; + Open</span>
+      </div>
+
+      <div class="actions">
+        <button type="button" id="btn-resample" class="action-btn action-btn-primary">Resample</button>
+      </div>
+    </section>
+
+    <footer class="demo-note">
+      <p>
+        This demo integrates a reverse stochastic differential equation (SDE) with an analytical two-state score as a lightweight proxy for a protein folding diffusion model.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>
