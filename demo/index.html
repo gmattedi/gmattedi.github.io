@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demos — Giulio Mattedi</title>
+  <meta name="description" content="Small client-side structural biology and machine learning demos by Giulio Mattedi.">
+  <link rel="canonical" href="https://gmattedi.github.io/demo/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Demos — Giulio Mattedi">
+  <meta property="og:description" content="Client-side structural biology and machine learning demos.">
+  <meta property="og:url" content="https://gmattedi.github.io/demo/">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'; connect-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none';">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body class="demos-body">
+  <main class="page">
+    <nav class="demos-nav" aria-label="Back to CV">
+      <a id="link-back-cv" href="../" class="page-action">&larr; CV</a>
+    </nav>
+
+    <header class="demos-header">
+      <h1>Demos</h1>
+      <p class="tagline">Small client-side structural biology &amp; ML experiments</p>
+    </header>
+
+    <section aria-label="Interactive demos">
+      <ul class="demo-list">
+        <li class="demo-item">
+          <a id="link-demo-diffusion" class="demo-link" href="diffusion/">Reverse-SDE Protein Conformer Sampling</a>
+          <p class="demo-desc">
+            Analytical two-state reverse SDE on Adenylate Kinase (open <code>4AKE</code> vs. closed <code>1AKE</code>) as a lightweight proxy for a protein folding diffusion model.
+          </p>
+        </li>
+        <li class="demo-item">
+          <a id="link-demo-solubility" class="demo-link" href="solubility/">Peptide Solubility</a>
+          <p class="demo-desc">
+            Quantized multi-scale 1D CNN running in vanilla JavaScript with per-residue attributions and an interactive <code>20 &times; L</code> single-mutant landscape.
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <footer>
+      <span>Giulio Mattedi</span>
+      <span>Client-side &middot; zero backend</span>
+    </footer>
+  </main>
+</body>
+</html>

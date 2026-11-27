@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Peptide Solubility — Giulio Mattedi</title>
+  <meta name="description" content="Client-side quantized 1D CNN peptide solubility predictor with per-residue attributions and an interactive 20 x L single-mutant heatmap.">
+  <link rel="canonical" href="https://gmattedi.github.io/demo/solubility/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Peptide Solubility — Giulio Mattedi">
+  <meta property="og:description" content="Client-side quantized 1D CNN peptide solubility predictor and mutational scanner.">
+  <meta property="og:url" content="https://gmattedi.github.io/demo/solubility/">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'; connect-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none';">
+  <link rel="stylesheet" href="../../style.css">
+  <link rel="stylesheet" href="solubility.css">
+  <script src="weights.js" defer></script>
+  <script src="solubility.js" defer></script>
+</head>
+<body class="sol-body">
+  <main class="page sol-page">
+    <nav class="demo-nav" aria-label="Navigation">
+      <a id="link-back-cv" href="../../" class="page-action">&larr; CV</a>
+      <a id="link-all-demos" href="../" class="page-action">All demos</a>
+    </nav>
+
+    <header class="sol-header">
+      <h1>Peptide Solubility</h1>
+      <p class="subtitle">Multi-scale 1D CNN &middot; Per-residue attribution &amp; mutational scan</p>
+    </header>
+
+    <section class="input-band" aria-label="Amino acid sequence input">
+      <div class="input-head">
+        <div class="presets" role="group" aria-label="Example sequences">
+          <span class="presets-label">Examples:</span>
+          <button type="button" class="pill-btn preset-btn" data-preset="insulin_b" aria-pressed="true">Insulin B</button>
+          <button type="button" class="pill-btn preset-btn" data-preset="melittin" aria-pressed="false">Melittin</button>
+          <button type="button" class="pill-btn preset-btn" data-preset="glp1" aria-pressed="false">GLP-1</button>
+          <button type="button" class="pill-btn preset-btn" data-preset="villin" aria-pressed="false">Villin HP35</button>
+          <button type="button" class="pill-btn preset-btn" data-preset="ubiquitin" aria-pressed="false">Ubiquitin</button>
+          <button type="button" class="pill-btn preset-btn" data-preset="walp23" aria-pressed="false">WALP23</button>
+        </div>
+        <button type="button" id="btn-reset" class="reset-btn" hidden>Reset sequence</button>
+      </div>
+      <textarea id="seq-input" rows="2" spellcheck="false" autocomplete="off" aria-label="Amino acid sequence in one-letter code">FVNQHLCGSHLVEALYLVCGERGFFYTPKT</textarea>
+      <p class="input-notice" id="input-notice" aria-live="polite"></p>
+    </section>
+
+    <section class="workspace" aria-label="Solubility prediction results">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Per-Residue Profile</span>
+          <span class="panel-status" id="status-profile">Hover to inspect</span>
+        </div>
+        <div class="canvas-stage">
+          <canvas id="plot-profile" width="840" height="380" aria-label="Per-residue solubility contribution bar plot"></canvas>
+        </div>
+        <div class="canvas-foot">
+          <span class="legend">
+            <span class="legend-item"><span class="box-swatch box-pos"></span>Promotes solubility</span>
+            <span class="legend-item"><span class="box-swatch box-neg"></span>Reduces solubility</span>
+          </span>
+          <span id="status-hover">Additive residue scores</span>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Predicted Solubility</span>
+          <span class="panel-status" id="status-len">30 aa</span>
+        </div>
+
+        <div class="score-block">
+          <div class="score-row">
+            <span class="score-value" id="score-val">--</span>
+            <span class="score-band" id="score-band"></span>
+          </div>
+          <div class="gauge-track" aria-hidden="true">
+            <div class="gauge-fill" id="gauge-fill"></div>
+            <div class="gauge-mid"></div>
+          </div>
+        </div>
+
+        <div class="muts-section">
+          <div class="muts-head">
+            <span>Top single-point mutations</span>
+            <span class="muts-hint" id="muts-hint">Click to apply</span>
+          </div>
+          <div class="muts-list" id="muts-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel heatmap-panel" aria-label="Single-mutant solubility landscape">
+      <div class="panel-head">
+        <span class="panel-title">Single-Mutant Landscape (20 &times; L)</span>
+        <span class="panel-status" id="status-heatmap">Click any cell to mutate</span>
+      </div>
+      <div class="heatmap-wrap" id="heatmap-wrap">
+        <canvas id="plot-heatmap" width="1560" height="536" aria-label="20 by L mutational solubility heatmap"></canvas>
+      </div>
+      <div class="heatmap-prompt" id="heatmap-prompt" hidden>
+        <button type="button" id="btn-run-scan" class="scan-btn">Compute 20 &times; L scan</button>
+      </div>
+      <div class="canvas-foot">
+        <span class="legend">
+          <span class="colorbar-legend">
+            <span id="cbar-min">&minus;0.20</span>
+            <span class="colorbar-ramp" aria-hidden="true"></span>
+            <span id="cbar-max">+0.20</span>
+          </span>
+          <span class="legend-item"><span class="box-swatch box-wt"></span>Current residue</span>
+        </span>
+        <span class="trail" id="mut-trail"></span>
+      </div>
+    </section>
+
+    <footer class="sol-note">
+      <p>
+        Client-side 16.4k-parameter multi-scale quantized 1D CNN running in vanilla JavaScript, trained on SoluProt and eSOL expression solubility datasets. Inspired by <a id="link-ansari-white" href="https://doi.org/10.1021/acs.jcim.2c01317" target="_blank" rel="noopener noreferrer">Ansari &amp; White (<em>J. Chem. Inf. Model.</em>, 2023)</a>.
+      </p>
+    </footer>
+  </main>
+</body>
+</html>
