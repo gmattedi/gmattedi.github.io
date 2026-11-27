@@ -133,10 +133,35 @@
   let rafId = 0;
   let inView = true;
   let tabVisible = !document.hidden;
+  let inkRgb = '17, 17, 17';
+  let bgRgb = '255, 255, 255';
 
   const coords = new Array(N);
   const projected = new Array(N);
   const drawList = new Array(N + N - 1);
+
+  function parseRgb(cssColor) {
+    const match =
+      cssColor && cssColor.match(/rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)(?:[\s,/]+([\d.]+))?\s*\)/);
+    if (!match) return null;
+    if (match[4] !== undefined && parseFloat(match[4]) === 0) return null;
+    return match[1] + ', ' + match[2] + ', ' + match[3];
+  }
+
+  function syncColors(redraw) {
+    const bodyStyle = getComputedStyle(document.body);
+    const htmlStyle = getComputedStyle(document.documentElement);
+    const nextInk = parseRgb(bodyStyle.color) || '17, 17, 17';
+    const nextBg =
+      parseRgb(bodyStyle.backgroundColor) ||
+      parseRgb(htmlStyle.backgroundColor) ||
+      '255, 255, 255';
+    if (nextInk !== inkRgb || nextBg !== bgRgb) {
+      inkRgb = nextInk;
+      bgRgb = nextBg;
+      if (redraw) drawFrame(elapsedMs);
+    }
+  }
 
   function drawFrame(tMs) {
     ctx.clearRect(0, 0, CSS_W, CSS_H);
@@ -198,10 +223,10 @@
         const width = 0.85 + depth * 0.9;
         const alpha = (0.14 + depth * 0.52) * item.bondFrac;
 
-        // Subtle white casing behind foreground segments keeps crossing helices legible.
+        // Subtle background-matched casing behind foreground segments keeps crossing helices legible.
         if (depth > 0.45 && item.bondFrac > 0.5) {
           ctx.lineWidth = width + 1.5;
-          ctx.strokeStyle = 'rgba(255, 255, 255, ' + (0.65 * item.bondFrac).toFixed(2) + ')';
+          ctx.strokeStyle = 'rgba(' + bgRgb + ', ' + (0.65 * item.bondFrac).toFixed(2) + ')';
           ctx.beginPath();
           ctx.moveTo(item.a.sx, item.a.sy);
           ctx.lineTo(item.b.sx, item.b.sy);
@@ -209,7 +234,7 @@
         }
 
         ctx.lineWidth = width;
-        ctx.strokeStyle = 'rgba(17, 17, 17, ' + alpha.toFixed(3) + ')';
+        ctx.strokeStyle = 'rgba(' + inkRgb + ', ' + alpha.toFixed(3) + ')';
         ctx.beginPath();
         ctx.moveTo(item.a.sx, item.a.sy);
         ctx.lineTo(item.b.sx, item.b.sy);
@@ -217,7 +242,7 @@
       } else {
         const radius = (1.3 + depth * 1.25) * (0.88 + 0.12 * item.p.persp);
         const alpha = 0.22 + depth * 0.72;
-        ctx.fillStyle = 'rgba(17, 17, 17, ' + alpha.toFixed(3) + ')';
+        ctx.fillStyle = 'rgba(' + inkRgb + ', ' + alpha.toFixed(3) + ')';
         ctx.beginPath();
         ctx.arc(item.p.sx, item.p.sy, radius, 0, Math.PI * 2);
         ctx.fill();
@@ -283,6 +308,18 @@
     }
   });
 
+  if ('MutationObserver' in window) {
+    const colorObserver = new MutationObserver(() => syncColors(true));
+    colorObserver.observe(document.documentElement, { attributes: true });
+    colorObserver.observe(document.body, { attributes: true });
+    if (document.head) {
+      colorObserver.observe(document.head, { childList: true, subtree: true, characterData: true });
+    }
+  }
+
+  window.addEventListener('load', () => syncColors(true));
+
+  syncColors(false);
   drawFrame(elapsedMs);
   startLoop();
 })();
