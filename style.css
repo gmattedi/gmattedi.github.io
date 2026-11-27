@@ -70,14 +70,44 @@ body {
 }
 
 .page {
+  position: relative;
   max-width: 46.5rem;
   margin: 0 auto;
 }
 
 .page-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+}
+
+.motif-wrap {
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
+  justify-content: center;
+  margin: 0 auto 0.65rem;
+}
+
+.motif-button {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.motif-button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 3px;
+}
+
+#fold-canvas {
+  display: block;
+  width: 220px;
+  max-width: 100%;
+  height: auto;
 }
 
 .pdf-button {
@@ -331,7 +361,18 @@ footer {
 
 @media (max-width: 640px) {
   body {
-    padding: 1.5rem 1.15rem 2.75rem;
+    padding: 1.25rem 1.15rem 2.75rem;
+  }
+
+  .page-actions {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.75rem;
+  }
+
+  .pdf-button {
+    padding: 0.36rem 0.78rem;
   }
 
   .entry,

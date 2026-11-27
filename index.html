@@ -14,6 +14,7 @@
   <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'; connect-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none';">
   <link rel="stylesheet" href="style.css">
   <script src="print.js" defer></script>
+  <script src="fold.js" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -64,6 +65,11 @@
     </div>
 
     <header>
+      <div class="motif-wrap print-hidden">
+        <button type="button" id="btn-replay-fold" class="motif-button" aria-label="Replay protein denoising animation">
+          <canvas id="fold-canvas" width="440" height="156" aria-hidden="true"></canvas>
+        </button>
+      </div>
       <h1>Giulio Mattedi</h1>
       <p class="tagline">Deep Learning for Structural Biology</p>
 
